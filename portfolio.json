@@ -1,0 +1,9 @@
+{
+  "visible": true,
+  "actif": true,
+  "termine": false,
+  "contexte": "personnel",
+  "screenshot": "",
+  "technologies": ["Spring Boot", "Java 21", "PostgreSQL"],
+  "competences": ["REST API", "WebClient", "Cache"]
+}
