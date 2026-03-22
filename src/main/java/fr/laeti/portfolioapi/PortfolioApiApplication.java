@@ -2,8 +2,10 @@ package fr.laeti.portfolioapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
+@EnableCaching
 public class PortfolioApiApplication {
 
 	public static void main(String[] args) {
