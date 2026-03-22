@@ -11,6 +11,7 @@ import fr.laeti.portfolioapi.project.client.GithubClient;
 import fr.laeti.portfolioapi.project.dto.PortfolioMetaDTO;
 import fr.laeti.portfolioapi.project.dto.ProjectDetailDTO;
 import fr.laeti.portfolioapi.project.dto.ProjectSummaryDTO;
+import fr.laeti.portfolioapi.project.exception.ProjectNotFoundException;
 import fr.laeti.portfolioapi.project.model.GithubRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class ProjectService {
         GithubRepo repo = githubClient.getAllRepos().stream()
                 .filter(r -> r.getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Projet introuvable : " + name));
+                .orElseThrow(() -> new ProjectNotFoundException(name) );
 
         PortfolioMetaDTO meta = fetchMeta(repo.getName());
         String readmeHtml = convertReadme(githubClient.getReadme(repo.getName()));
