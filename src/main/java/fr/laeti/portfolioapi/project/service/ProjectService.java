@@ -40,7 +40,7 @@ public class ProjectService {
 
     // ─── Détail d'un projet ───────────────────────────────────────────────────
 
-    @Cacheable(value = "projectDetail", key = "#a0")
+    @Cacheable(value = "projectDetail", key = "#name")
     public ProjectDetailDTO getProjectByName(String name) {
         log.info("Chargement du détail du projet : {}", name);
 
