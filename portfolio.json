@@ -3,7 +3,7 @@
   "actif": true,
   "termine": false,
   "contexte": "personnel",
-  "screenshot": "",
+  "screenshot": "/screenshots/swagger-portfolio-api.png",
   "technologies": ["Spring Boot", "Java 21", "PostgreSQL"],
   "competences": ["REST API", "WebClient", "Cache"]
 }
