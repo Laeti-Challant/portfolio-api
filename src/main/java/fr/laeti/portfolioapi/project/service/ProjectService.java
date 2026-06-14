@@ -11,10 +11,12 @@ import fr.laeti.portfolioapi.project.client.GithubClient;
 import fr.laeti.portfolioapi.project.dto.PortfolioMetaDTO;
 import fr.laeti.portfolioapi.project.dto.ProjectDetailDTO;
 import fr.laeti.portfolioapi.project.dto.ProjectSummaryDTO;
+import fr.laeti.portfolioapi.project.exception.ProjectNotFoundException;
 import fr.laeti.portfolioapi.project.model.GithubRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,6 @@ public class ProjectService {
         log.info("Chargement de la liste des projets depuis GitHub");
         return githubClient.getAllRepos().stream()
                 .filter(repo -> !repo.isFork())         // on exclut les forks
-                .filter(repo -> !repo.isPrivate())      // on exclut les repos privés
                 .map(this::toSummary)                   // on convertit chaque repo
                 .filter(ProjectSummaryDTO::isVisible)   // on exclut les non visibles
                 .toList();
@@ -39,14 +40,14 @@ public class ProjectService {
 
     // ─── Détail d'un projet ───────────────────────────────────────────────────
 
-    @Cacheable(value = "projectDetail", key = "#name")
+    @Cacheable(value = "projectDetail", key = "#a0")
     public ProjectDetailDTO getProjectByName(String name) {
         log.info("Chargement du détail du projet : {}", name);
 
         GithubRepo repo = githubClient.getAllRepos().stream()
                 .filter(r -> r.getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Projet introuvable : " + name));
+                .orElseThrow(() -> new ProjectNotFoundException(name) );
 
         PortfolioMetaDTO meta = fetchMeta(repo.getName());
         String readmeHtml = convertReadme(githubClient.getReadme(repo.getName()));

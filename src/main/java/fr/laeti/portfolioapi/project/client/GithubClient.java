@@ -16,12 +16,12 @@ public class GithubClient {
 
     private final WebClient githubWebClient;
 
-    // Récupère tous les repos publics
+    // Récupère tous les repos (publics et privés) via l'endpoint authentifié
     public List<GithubRepo> getAllRepos() {
         log.info("Appel GitHub : récupération des repos");
         return githubWebClient
                 .get()
-                .uri("/users/laeti-challant/repos?per_page=100&sort=pushed")
+                .uri("/user/repos?per_page=100&sort=pushed")
                 .retrieve()
                 .bodyToFlux(GithubRepo.class)
                 .collectList()

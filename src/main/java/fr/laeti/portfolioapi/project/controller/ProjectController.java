@@ -22,7 +22,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<ProjectDetailDTO> getProjectByName(@PathVariable String name) {
+    public ResponseEntity<ProjectDetailDTO> getProjectByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(projectService.getProjectByName(name));
     }
 }
